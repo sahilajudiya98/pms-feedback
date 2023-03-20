@@ -1,0 +1,102 @@
+
+<div class="content-wrapper container-xxl alert p-0">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel4" *ngIf="editQueryData">Update Query Status</h4>
+    <h4 class="modal-title" id="myModalLabel4"  *ngIf="assignToData">Assign To Another Team Member</h4>
+    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <div class="content-body m-3">
+
+      
+      <ng-container
+      [ngTemplateOutlet]="editQueryData ? updateQueryStatusForms : assignToPersonForms">
+    </ng-container>
+
+    <ng-template #updateQueryStatusForms >
+
+      <form class="form form-vertical" [formGroup]="updateQueryStatusForm"  (ngSubmit)="updateQueryStatusform(updateQueryStatusForm.value)" >
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="title">Status</label>
+              <select name="status" class="form-control form-control-merge" formControlName="status" aria-placeholder="Select Status"
+              [ngClass]="{ 'is-invalid error': f.status?.errors &&  (submitted || f.status?.touched) }" >
+                        <option value='null' disabled selected="">Select Status</option>
+                        <option value="1">Open</option>
+                        <option value="2">In Progress</option>
+                        <option value="3">Closed</option>
+                        <option value="4">Confirmed</option>
+                    </select>
+                    <ng-container *ngIf="f.status?.errors &&  (submitted || f.status?.touched)">
+                        <div *ngIf="f.status?.errors.required" class="text-danger">
+                            pleaset select status
+                        </div>
+                    </ng-container>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="feedback_remark">Feedback remark</label>
+              <fieldset class="form-group">
+                <textarea class="form-control" rows="3" placeholder="Add your feedback remark here" formControlName="feedback_remark"  [ngClass]="{ 'is-invalid error':f.feedback_remark.errors && (submitted || f.feedback_remark?.touched)}"></textarea>
+              </fieldset>
+              <ng-container  *ngIf="f.feedback_remark.errors && (submitted || f.feedback_remark?.touched)">
+                <div *ngIf="f.feedback_remark.errors.required" class="text-danger">feedback remark is required</div>
+            </ng-container>
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" rippleEffect class="btn btn-primary mr-1">Submit</button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+
+    <ng-template #assignToPersonForms >
+      <form class="form form-vertical" [formGroup]="assignToPersonForm"  (ngSubmit)="assignToPersonform(assignToPersonForm.value)" >
+        
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="title">Status</label>
+              <fieldset class="form-group">
+                <ng-select
+                  [items]="assignToPerson"
+                  name="assignToPerson"
+                  bindLabel="first_name"
+                  bindValue="_id"
+                  placeholder="Select Assign To Person"
+                  formControlName="assigned_to"
+                  [ngClass]="{ 'is-invalid error': f.assigned_to?.errors &&  (submitted || f.assigned_to?.touched) }"
+                >
+                <ng-template ng-option-tmp let-item="item">
+                  <div>{{item.first_name}} {{item.last_name}}</div>
+              </ng-template>
+              </ng-select>
+              </fieldset>
+
+                    <ng-container *ngIf="f.assigned_to?.errors &&  (submitted || f.assigned_to?.touched)">
+                        <div *ngIf="f.assigned_to?.errors.required" class="text-danger">
+                            pleaset select Assign Person
+                        </div>
+                    </ng-container>
+            </div>
+          </div>
+         
+          <div class="col-12">
+            <button type="submit" rippleEffect class="btn btn-primary mr-1">Submit</button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </form>
+      </ng-template>
+    </div>
+  </div>
+
+
+
+

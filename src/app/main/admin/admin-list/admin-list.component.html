@@ -1,0 +1,199 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Admin Users</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 mb-50 mt-3 mx-3">
+                      <fieldset class="form-group">
+                        <button
+                          class="btn btn-primary ml-1 waves-effect waves-float waves-light ml-3 mt-3"
+                          rippleEffect
+                        >
+                          <i data-feather="plus" class="mr-0 mr-sm-1"></i
+                          ><span
+                            class="d-none d-sm-inline-block"
+                            (click)="addNewRecord()"
+                            >Add New Record</span
+                          >
+                        </button>
+                      </fieldset>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="d-flex justify-content-between align-items-center m-1">
+                        <label class="d-flex align-items-center mx-3"
+                          >Show
+                          <select
+                            class="form-control mx-25"
+                            [(ngModel)]="length" (change)="setLength({'length':length,'search':myControl.value})"
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                           
+                          </select>
+                          entries</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                      <div
+                        class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
+                      >
+                        <label class="d-flex align-items-center"
+                          >Search<input
+                            type="search"
+                            placeholder="Search"
+                            class="form-control ml-25"
+                            [formControl]='myControl'
+          
+                        /></label>
+                      </div>
+                    </div>
+                  </div>
+
+                    <ngx-datatable
+                    [rows]="rows"
+                    [rowHeight]="58"
+                    class="bootstrap core-bootstrap"
+                    [limit]="10"
+                    [columnMode]="ColumnMode.force"
+                    [headerHeight]="40"
+                    [footerHeight]="50"
+                    [scrollbarH]="true"
+                    [limit]="length"
+                    [externalPaging]="true"
+                    [externalSorting]="true"
+                    [count]="rowCount"
+                    (page)="datatablePageData({'length':length ,'search':myControl.value },$event)"
+                    [offset]="tableOffset"
+                  >
+                    <ngx-datatable-column
+                      [width]="50"
+                      [sortable]="false"
+                      [canAutoResize]="false"
+                      [draggable]="false"
+                      [resizeable]="false"
+                    >
+                      <ng-template
+                        ngx-datatable-header-template
+                        let-value="value"
+                        let-allRowsSelected="allRowsSelected"
+                        let-selectFn="selectFn"
+                      >
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            [checked]="allRowsSelected"
+                            (change)="selectFn(!allRowsSelected)"
+                            id="headerChkbxRef"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="headerChkbxRef"
+                          ></label>
+                        </div>
+                      </ng-template>
+                      <ng-template
+                        ngx-datatable-cell-template
+                        let-rowIndex="rowIndex"
+                        let-value="value"
+                        let-isSelected="isSelected"
+                        let-onCheckboxChangeFn="onCheckboxChangeFn"
+                      >
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            [checked]="isSelected"
+                            (change)="onCheckboxChangeFn($event)"
+                            id="rowChkbxRef{{ rowIndex }}"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="rowChkbxRef{{ rowIndex }}"
+                          ></label>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Name" prop="fullname">
+                      <ng-template ngx-datatable-cell-template let-row="row">
+                          {{ row.first_name }}  {{ row.last_name}}
+                      </ng-template>
+                  </ngx-datatable-column>
+          
+                    <ngx-datatable-column
+                      name="Email"
+                      prop="email"
+                      [width]="250"
+                    ></ngx-datatable-column>
+                    <ngx-datatable-column
+                    name="Company"
+                    prop="company"
+                    [width]="150"
+                  ></ngx-datatable-column>
+             
+        
+                    <ngx-datatable-column name="user_type" prop="user_type" [width]="120">
+                      <ng-template let-user_type="value" ngx-datatable-cell-template>
+                        <div
+                          class="badge badge-pill"
+                          [ngClass]="{
+                            'badge-light': user_type == 1
+                            
+                          }"
+                        >
+                          {{
+                            user_type == 1
+                              ? "Admin"
+                              : "Applied"
+                          }}
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+        
+                    <ngx-datatable-column name="Status" prop="status" [width]="120">
+                      <ng-template let-status="value" ngx-datatable-cell-template>
+                        <div
+                          class="badge badge-pill"
+                          [ngClass]="{
+                            'badge-light-success': status == '1',
+                            'badge-light-danger': status == '2'
+                          }"
+                        >
+                          {{
+                            status == 1
+                              ? "Active"
+                              : status == 2
+                              ? "InActive"
+                              : "Applied"
+                          }}
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    
+                    <ngx-datatable-column name="Actions"  [width]="120" [sortable]="false">
+                      <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                        <div class="d-flex align-items-center">
+                          <button (click)="deleteAdmin(row._id)" class="bg-transparent border-0"> <i data-feather="trash-2" class="text-primary cursor-pointer" ></i></button>
+                          <button (click)="editAdmin(row._id)" class="bg-transparent border-0"> <i data-feather="edit" class="text-primary cursor-pointer" ></i></button>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+
+                          
+                    <core-sidebar class="modal modal-slide-in fade event-sidebar" name="user-create-sidebar"
+                        overlayClass="modal-backdrop" hideOnEsc="true">
+                        <app-create-admin></app-create-admin>
+                    </core-sidebar>
+                </div>
+            </div>
+        </div>
+    </div>

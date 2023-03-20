@@ -1,0 +1,122 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
+      <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <img alt="Login V2" class="img-fluid" src="assets\images\pages\register-v2.svg">
+      </div>
+    </div>
+    <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5 sidebg">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+        <h2 class="card-title font-weight-bold mb-1">Welcome to Angular</h2>
+        <p class="card-text mb-2">Please sign-in to your account </p>
+
+        <form class="auth-login-form mt-2" [formGroup]="signupForm" (ngSubmit)="signupform(signupForm.value)">
+
+          <div class="form-group">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text"  formControlName="first_name"  class="form-control" placeholder="Please Enter First Name"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            
+            <ng-container *ngIf=" f.first_name.errors &&  (submitted || f.first_name?.touched)">
+              <div  *ngIf="f.first_name.errors.required" class="text-danger">
+                First Name is required
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="form-group">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text"  formControlName="last_name"  class="form-control" placeholder="Please Enter Last Name"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            
+            <ng-container *ngIf="f.last_name.errors &&  (submitted || f.last_name?.touched)">
+              <div *ngIf="f.last_name.errors.required" class="text-danger">
+                Last Name is required
+              </div>
+            </ng-container>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" formControlName="email" placeholder="sahil!23@gmail.com" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"> 
+           
+            <ng-container  *ngIf="f.email.errors &&  (submitted || f.email?.touched)">
+              <div *ngIf="f.email.errors.required" class="text-danger">Email is required</div>
+              <div *ngIf="f.email.errors.email" class="text-danger">Email must be a valid email address</div>
+          </ng-container>
+          </div>
+
+
+          <div class="form-group">
+            <div class="d-flex justify-content-between">
+              <label for="login-password">Password</label>
+            </div>
+            <div class="input-group input-group-merge">
+              <input formControlName="password" placeholder="Please enter password"
+                class="form-control form-control-merge" type="password"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            </div>
+
+            <ng-container *ngIf="f.password.errors &&  (submitted || f.password?.touched)">
+              <div  *ngIf="f.password.errors.required" class="text-danger">
+                password is required
+              </div>
+              <div  *ngIf="f.password.errors.minlength" class="text-danger">
+                password length 8 required
+              </div>
+              <div *ngIf="f.password.errors?.['passwordStrength']" class="text-danger">
+                please enter strong password Ex(Google@123)
+              </div>
+            </ng-container>
+          </div>
+
+
+          <div class="form-group">
+            <div class="d-flex justify-content-between">
+              <label for="login-password">Confirm Password</label>
+            </div>
+            <div class="input-group input-group-merge">
+              <input formControlName="confirmpassword" placeholder="Please enter confirm password"
+                class="form-control form-control-merge" type="password"  [ngClass]="{ 'is-invalid': submitted && f.confirmpassword.errors }">
+            </div>
+
+            <ng-container *ngIf="f.confirmpassword.errors &&  (submitted || f.confirmpassword?.touched)">
+              <div *ngIf="f.confirmpassword.errors.required" class="text-danger">
+                confirm password is required
+              </div>
+            </ng-container> 
+            <div *ngIf="signupForm.errors?.['noMatch']" class="text-danger">
+              password and confirmpassword not match
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="company" class="form-label">Compeney Name</label>
+            <input type="text"  formControlName="company"  class="form-control" placeholder="Please Enter Compeney Name"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            
+            <ng-container *ngIf="f.company.errors &&  (submitted || f.company?.touched)">
+              <div *ngIf="f.company.errors.required" class="text-danger" >
+                Company Name is required
+              </div>
+            </ng-container>
+          </div>
+
+
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="remember-me" tabindex="3" />
+              <label class="custom-control-label" for="remember-me"> Remember Me </label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" tabindex="4" rippleEffect>Sign in</button>
+        </form>
+
+
+        <p class="text-center mt-2"><span>Already have an account?&nbsp; </span>
+          <a [routerLink]="['/auth/login']">Sign in insted</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

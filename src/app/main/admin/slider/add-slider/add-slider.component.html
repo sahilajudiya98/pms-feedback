@@ -1,0 +1,98 @@
+
+    <form [formGroup]="sliderform" (ngSubmit)="sliderForm(sliderform.value)">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel4">Add Slider</h4>
+            <button
+            type="button"
+            class="close"
+            (click)="closeModal()"
+            aria-label="Close"
+            >
+            <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="col-xl-12 col-md-6 col-12 mb-1">
+          <div class="form-group">
+            <label for="basicInput">Enter title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="basicInput"
+              placeholder="Enter title"
+              formControlName="title"
+            />
+            <ng-container *ngIf=" f.title.errors &&  (submitted || f.title?.touched)">
+              <div *ngIf="f.title.errors.required" class="text-danger">
+                Title is required
+              </div>
+            </ng-container>
+          </div>
+        </div>
+  
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="form-group">
+                <label for="basicInputFile">Enter Slider image</label>
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class=" w-100"
+                    id="customFile"
+                    (change)="selectedImage($event)"
+                  
+                  />
+                  <label class="custom-file-label" for="customFile"
+                    >Choose file</label
+                  >
+                </div>
+                <ng-container *ngIf=" f.slider_image.errors &&  (submitted || f.slider_image?.touched ||f.slider_image?.dirty)">
+                  <div *ngIf="f.slider_image.errors.required" class="text-danger">
+                    slider image is required
+                  </div>
+                  <div *ngIf="sliderform.get('slider_image').errors?.['notSupportedFileType']" class="text-danger">
+                    please Upload Correct File(ex. png,jpg,jpeg)
+                  </div>
+                </ng-container>
+              </div>
+              <div style="text-align:center">
+                <div><img [src]="url" *ngIf="url" width="25%"></div>
+              </div>
+              <div *ngIf="isimageshow" style="text-align:center">
+                <img [src]="editimage" width="25%">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+  
+        <div class="col-xl-4 col-md-6 col-12 mb-1">
+          <div class="form-group">
+            <label for="status">Status</label>
+            <div class="custom-control custom-control-primary custom-switch">
+              <input
+                type="checkbox"
+                checked
+                class="custom-control-input"
+                id="customSwitch3"
+                formControlName="status"
+     
+              />
+              <label class="custom-control-label" for="customSwitch3"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+      
+          rippleEffect
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+ 

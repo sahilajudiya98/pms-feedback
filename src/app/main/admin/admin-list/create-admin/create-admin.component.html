@@ -1,0 +1,176 @@
+<div class="modal-dialog sidebar-lg">
+    <div class="modal-content p-0">
+        <div class="modal-header align-items-center mb-1">
+            <div class="todo-item-action d-flex align-items-center justify-content-between ml-auto">
+              <button
+                (click)="closeSidebar()"
+                type="button"
+                class="close font-large-1 font-weight-normal py-0"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+
+          </div>
+          <h5  class="modal-title m-3" *ngIf="IsFieldshow">Add Record</h5>
+          <h5  class="modal-title m-3"  *ngIf="!IsFieldshow">Edit Record</h5>
+   
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <form class="auth-login-form mt-2" [formGroup]="creatadminForm" (ngSubmit)="cereateAdminform(creatadminForm.value)">
+            <div class="col-xl-12 col-md-6 col-12 mb-1">
+                <div class="form-group">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" formControlName="first_name" class="form-control"
+                        placeholder="Please Enter First Name">
+    
+                    <ng-container *ngIf=" f.first_name.errors &&  (submitted || f.first_name?.touched)">
+                        <div *ngIf="f.first_name.errors.required" class="text-danger">
+                            First Name is required
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1">
+                <div class="form-group">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" formControlName="last_name" class="form-control" placeholder="Please Enter Last Name"
+                        >
+    
+                    <ng-container *ngIf="f.last_name.errors &&  (submitted || f.last_name?.touched)">
+                        <div *ngIf="f.last_name.errors.required" class="text-danger">
+                            Last Name is required
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" formControlName="email" placeholder="sahil!23@gmail.com" class="form-control"
+                       >
+    
+                    <ng-container *ngIf="f.email.errors &&  (submitted || f.email?.touched)">
+                        <div *ngIf="f.email.errors.required" class="text-danger">Email is required</div>
+                        <div *ngIf="f.email.errors.email" class="text-danger">Email must be a valid email address</div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1" *ngIf="IsFieldshow">
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <label for="login-password">Password</label>
+                    </div>
+                    <div class="input-group input-group-merge">
+                        <input formControlName="password" placeholder="Please enter password"
+                            class="form-control form-control-merge" type="password"
+                          >
+                    </div>
+    
+                    <ng-container *ngIf="f.password?.errors &&  (submitted || f.password?.touched)">
+                        <div *ngIf="f.password?.errors.required" class="text-danger">
+                            password is required
+                        </div>
+                        <div *ngIf="f.password?.errors.minlength" class="text-danger">
+                            password length 8 required
+                        </div>
+                        <div *ngIf="f.password?.errors?.['passwordStrength']" class="text-danger">
+                            please enter strong password Ex(Google@123)
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1" *ngIf="IsFieldshow">
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <label for="login-password">Confirm Password</label>
+                    </div>
+                    <div class="input-group input-group-merge">
+                        <input formControlName="confirm_password" placeholder="Please enter confirm password"
+                            class="form-control form-control-merge" type="password"
+                           >
+                    </div>
+    
+                    <ng-container *ngIf="f.confirm_password?.errors &&  (submitted || f.confirm_password?.touched)">
+                        <div *ngIf="f.confirm_password?.errors.required" class="text-danger">
+                            confirm password is required
+                        </div>
+                    </ng-container>
+                    <div *ngIf="creatadminForm?.errors?.['noMatch']" class="text-danger">
+                        password and confirm_password not match
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1">
+                <div class="form-group">
+                    <label for="company" class="form-label">Compeney Name</label>
+                    <input type="text" formControlName="company" class="form-control"
+                        placeholder="Please Enter Compeney Name">
+    
+                    <ng-container *ngIf="f.company.errors &&  (submitted || f.company?.touched)">
+                        <div *ngIf="f.company.errors.required" class="text-danger">
+                            Company Name is required
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 col-12 mb-1" *ngIf="IsFieldshow">
+                <div class="form-group">
+            
+                    <label for="user_type" class="form-label">Please Select Your Typle</label>
+                    <select name="user_type" class="form-control form-control-merge" formControlName="user_type" aria-placeholder="Select Type"
+                        >
+                        <option value='null' disabled selected="">Select Type</option>
+                        <option value="1">ADMIN</option>
+                        <option value="2">USER</option>
+                    </select>
+                    <ng-container *ngIf="f.user_type?.errors &&  (submitted || f.user_type?.touched)">
+                        <div *ngIf="f.user_type?.errors.required" class="text-danger">
+                            pleaset select user type
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-md-6 col-12 mb-1">
+                <div class="form-group">
+                    <button
+                  type="submit"
+                  class="btn btn-primary add-todo-item mr-2"
+                  rippleEffect
+                  *ngIf="IsFieldshow"
+                >
+                  Add
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary add-todo-item mr-2"
+                  rippleEffect
+                  *ngIf="!IsFieldshow"
+                >
+                  Edit
+                </button>
+
+
+
+                <button
+                  class="btn btn-outline-secondary add-todo-item"
+                  type="button"
+                  (click)="closeSidebar()"
+                  data-dismiss="modal"
+                  rippleEffect
+                >
+                  Close
+                </button>
+                </div>
+            </div>
+          
+        </form>
+    </div>
+   
+    
+
+</div>
+</div>

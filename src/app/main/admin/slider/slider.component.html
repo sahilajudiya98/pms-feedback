@@ -1,0 +1,139 @@
+<div class="card">
+  <div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <section id="ngx-datatable-kitchen-sink">
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <fieldset class="form-group">
+              <button
+                class="btn btn-primary ml-1 waves-effect waves-float waves-light ml-3 mt-3"
+                rippleEffect
+              >
+                <i data-feather="plus" class="mr-0 mr-sm-1"></i
+                ><span
+                  class="d-none d-sm-inline-block"
+                  (click)="addSlider()"
+                  >Add New Slider</span
+                >
+              </button>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <fieldset class="form-group">
+            <ng-select
+              [items]="selectStatus"
+              [(ngModel)]="selectedStatus"
+              name="selectedStatus"
+              bindLabel="name"
+              bindValue="value"
+              placeholder="Select Status"
+              (change)="filterByStatus($event)"
+            ></ng-select>
+          </fieldset>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- data table start -->
+
+
+<ngx-datatable
+  [rows]="rows"
+  [rowHeight]="58"
+  class="bootstrap core-bootstrap"
+  [columnMode]="ColumnMode.force"
+  [headerHeight]="40"
+  [footerHeight]="50"
+  [scrollbarH]="true"
+  [limit]="limit"
+  (page)="datatablePageData($event)"
+  [offset]="tableOffset"
+>
+  <ngx-datatable-column
+    [width]="50"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+    <ng-template
+      ngx-datatable-header-template
+      let-value="value"
+      let-allRowsSelected="allRowsSelected"
+      let-selectFn="selectFn"
+    >
+      <div class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          [checked]="allRowsSelected"
+          (change)="selectFn(!allRowsSelected)"
+          id="headerChkbxRef"
+        />
+        <label class="custom-control-label" for="headerChkbxRef"></label>
+      </div>
+    </ng-template>
+    <ng-template
+      ngx-datatable-cell-template
+      let-rowIndex="rowIndex"
+      let-value="value"
+      let-isSelected="isSelected"
+      let-onCheckboxChangeFn="onCheckboxChangeFn"
+    >
+      <div class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          [checked]="isSelected"
+          (change)="onCheckboxChangeFn($event)"
+          id="rowChkbxRef{{ rowIndex }}"
+        />
+        <label
+          class="custom-control-label"
+          for="rowChkbxRef{{ rowIndex }}"
+        ></label>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="title"
+    prop="title"
+    [width]="250"
+  ></ngx-datatable-column>
+
+  <ngx-datatable-column name="slider_image" prop="slider_image" [width]="250">
+    <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+      <img [src]="row.slider_image" style="width: 20%" />
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="status" prop="status" [width]="250">
+    <ng-template let-status="value" ngx-datatable-cell-template>
+      <div
+        class="badge badge-pill"
+        [ngClass]="{
+          'badge-light-success': status == '1',
+          'badge-light-danger': status == '2'
+        }"
+      >
+        {{ status == 1 ? "Active" : status == 2 ? "InActive" : "Applied" }}
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Actions"  [width]="120" [sortable]="false">
+    <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+      <div class="d-flex align-items-center">
+        <button (click)="deleteSlider(row._id)" class="bg-transparent border-0"> <i data-feather="trash-2" class="text-primary cursor-pointer" ></i></button>
+        <button (click)="editSlider(row._id)" class="bg-transparent border-0"> <i data-feather="edit" class="text-primary cursor-pointer" ></i></button>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

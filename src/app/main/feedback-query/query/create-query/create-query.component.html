@@ -1,0 +1,62 @@
+
+<div class="content-wrapper container-xxl p-0">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel4">Create New Query</h4>
+    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="content-body m-3 ">
+    <form class="form form-vertical" [formGroup]="CreateQueryForm" (ngSubmit)="createQueryform(CreateQueryForm.value)">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" placeholder="Title" formControlName="feedback_title" 
+            [ngClass]="{ 'is-invalid error': f.feedback_title.errors && (submitted || f.feedback_title?.touched) }"/>
+
+            <ng-container *ngIf="f.feedback_title.errors && (submitted || f.feedback_title?.touched)">
+              <div *ngIf="f.feedback_title.errors.required" class="text-danger">Title is required</div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <fieldset class="form-group">
+              <textarea class="form-control" rows="3" placeholder="Add your Query description here"
+                formControlName="feedback_description"  [ngClass]="{ 'is-invalid error': f.feedback_description.errors && (submitted || f.feedback_description?.touched) }"></textarea>
+            </fieldset>
+            <ng-container *ngIf="f.feedback_description.errors && (submitted || f.feedback_description?.touched)">
+              <div *ngIf="f.feedback_description.errors.required" class="text-danger">description is required</div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="title">Query Type</label>
+            <select name="status" class="form-control form-control-merge" formControlName="feedback_type" aria-placeholder="Select Status"
+            [ngClass]="{ 'is-invalid error': f.feedback_type?.errors &&  (submitted || f.feedback_type?.touched) }">
+                      <option value='null' disabled selected="">Select Query Type</option>
+                      <option value="1">Network</option>
+                      <option value="2">HR</option>
+                      <option value="3">House Keeoing</option>
+                      <option value="4">PMS Query</option>
+                      <option value="5">SALARY</option>
+                  </select>
+                  <ng-container *ngIf="f.feedback_type?.errors &&  (submitted || f.feedback_type?.touched)">
+                      <div *ngIf="f.feedback_type?.errors.required" class="text-danger">
+                          pleaset select Query Type
+                      </div>
+                  </ng-container>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" rippleEffect class="btn btn-primary mr-1">Submit</button>
+          <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+        </div>
+   
+      </div>
+    </form>
+  </div>
+</div>
